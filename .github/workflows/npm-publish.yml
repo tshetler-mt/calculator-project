@@ -20,3 +20,17 @@ jobs:
       - run: npm ci
       - run: npm test
 
+  cypress-test:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node14.7.0-chrome84
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run cypress test
+      uses: cypress-io/github-action@v2
+      with:
+        browser: chrome
+        headless: true
+        install-command: npm i
+        start: npm start
+        wait-on: 'http://localhost:3000'
