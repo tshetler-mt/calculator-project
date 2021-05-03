@@ -1,186 +1,161 @@
+var sinon = require("sinon");
+var rewire = require("rewire");
+const { expect } = require("chai");
 
+let Calculator = rewire("../calculator/calculator.js").__get__("unit_test");
 
-var sinon = require('sinon');
-var rewire = require('rewire');
-const { expect } = require('chai');
+describe("Calculator Test Suite", () => {
+    describe("Test Addition logic", function () {
+        it("Add operator passed in, calls the add method on operate.", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "add");
+            var mock = sinon.mock(calc);
+            var expectation = mock.expects("add");
+            expectation.exactly(1);
 
+            //Invoke
+            calc.operate();
 
-let Calculator = rewire('../calculator/calculator.js').__get__('unit_test');
+            //Assert
+            mock.verify();
+        });
 
-describe('Calculator Test Suite', () => {
-  describe('Test Addition logic', function(){
-      it("Add operator passed in, calls the add method on operate.", function(){
+        it("Value equals the sum of two inputs", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "add");
+            //Invoke
+            calc.operate();
 
-        //Arrange
-        var calc = new Calculator(1, 1, "add");
-        var mock = sinon.mock(calc);
-        var expectation = mock.expects("add");
-        expectation.exactly(1);
-    
-        //Invoke
-        calc.operate();
+            //Assert
+            expect(calc.value).to.be.equal(2);
+        });
 
-        //Assert
-        mock.verify();
-      });
+        it("Returns Appropriate Action String", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "add");
+            //Invoke
+            calc.operate();
 
-      it("Value equals the sum of two inputs", function(){
-
-        //Arrange
-        var calc = new Calculator(1, 1, "add");
-        //Invoke
-        calc.operate();
-
-        //Assert
-        expect(calc.value).to.be.equal(2);
-
-      });
-
-      it("Returns Appropriate Action String", function(){
-
-        //Arrange
-        var calc = new Calculator(1, 1, "add");
-        //Invoke
-        calc.operate();
-
-        //Assert
-        expect(calc.getAction()).to.be.equal("adding");
-
-      });
-  });
-
-  describe('Test Subtraction logic', function(){
-    it("Subtract operator passed in, calls the subtract method on operate.", function(){
-
-      //Arrange
-      var calc = new Calculator(1, 1, "subtract");
-      var mock = sinon.mock(calc);
-      var expectation = mock.expects("subtract");
-      expectation.exactly(1);
-  
-      //Invoke
-      calc.operate();
-
-      //Assert
-      mock.verify();
+            //Assert
+            expect(calc.getAction()).to.be.equal("adding");
+        });
     });
 
-    it("Value equals the difference of two inputs", function(){
+    describe("Test Subtraction logic", function () {
+        it("Subtract operator passed in, calls the subtract method on operate.", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "subtract");
+            var mock = sinon.mock(calc);
+            var expectation = mock.expects("subtract");
+            expectation.exactly(1);
 
-      //Arrange
-      var calc = new Calculator(1, 1, "subtract");
-      //Invoke
-      calc.operate();
+            //Invoke
+            calc.operate();
 
-      //Assert
-      expect(calc.value).to.be.equal(0);
+            //Assert
+            mock.verify();
+        });
 
+        it("Value equals the difference of two inputs", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "subtract");
+            //Invoke
+            calc.operate();
+
+            //Assert
+            expect(calc.value).to.be.equal(0);
+        });
+
+        it("Returns Appropriate Action String", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "subtract");
+            //Invoke
+            calc.operate();
+
+            //Assert
+            expect(calc.getAction()).to.be.equal("subtracting");
+        });
     });
 
-    it("Returns Appropriate Action String", function(){
+    describe("Test Multiplaction logic", function () {
+        it("Product operator passed in, calls the multiply method on operate.", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "multiply");
+            var mock = sinon.mock(calc);
+            var expectation = mock.expects("multiply");
+            expectation.exactly(1);
 
-      //Arrange
-      var calc = new Calculator(1, 1, "subtract");
-      //Invoke
-      calc.operate();
+            //Invoke
+            calc.operate();
 
-      //Assert
-      expect(calc.getAction()).to.be.equal("subtracting");
+            //Assert
+            mock.verify();
+        });
 
-    });
-  });
+        it("Value equals the product of two inputs", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "multiply");
+            //Invoke
+            calc.operate();
 
-  describe('Test Multiplaction logic', function(){
-    it("Product operator passed in, calls the multiply method on operate.", function(){
+            //Assert
+            expect(calc.value).to.be.equal(1);
+        });
 
-      //Arrange
-      var calc = new Calculator(1, 1, "multiply");
-      var mock = sinon.mock(calc);
-      var expectation = mock.expects("multiply");
-      expectation.exactly(1);
-  
-      //Invoke
-      calc.operate();
+        it("Returns Appropriate Action String", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "multiply");
+            //Invoke
+            calc.operate();
 
-      //Assert
-      mock.verify();
-    });
-
-    it("Value equals the product of two inputs", function(){
-
-      //Arrange
-      var calc = new Calculator(1, 1, "multiply");
-      //Invoke
-      calc.operate();
-
-      //Assert
-      expect(calc.value).to.be.equal(1);
-
+            //Assert
+            expect(calc.getAction()).to.be.equal("multiplying");
+        });
     });
 
-    it("Returns Appropriate Action String", function(){
+    describe("Test Division logic", function () {
+        it("Division operator passed in, calls the multiply method on operate.", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "divide");
+            var mock = sinon.mock(calc);
+            var expectation = mock.expects("divide");
+            expectation.exactly(1);
 
-      //Arrange
-      var calc = new Calculator(1, 1, "multiply");
-      //Invoke
-      calc.operate();
+            //Invoke
+            calc.operate();
 
-      //Assert
-      expect(calc.getAction()).to.be.equal("multiplying");
+            //Assert
+            mock.verify();
+        });
 
+        it("Value equals the division of two inputs", function () {
+            //Arrange
+            var calc = new Calculator(8, 2, "divide");
+            //Invoke
+            calc.operate();
+
+            //Assert
+            expect(calc.value).to.be.equal(4);
+        });
+
+        it("Returns Appropriate Action String", function () {
+            //Arrange
+            var calc = new Calculator(1, 1, "divide");
+            //Invoke
+            calc.operate();
+
+            //Assert
+            expect(calc.getAction()).to.be.equal("dividing");
+        });
+
+        it("Raises divide by zero flag", function () {
+            //Arrange
+            var calc = new Calculator(1, 0, "divide");
+            //Invoke
+            calc.operate();
+
+            //Assert
+            expect(calc.attemptedDivideByZero).to.be.true;
+        });
     });
-  });
-
-  describe('Test Division logic', function(){
-    it("Division operator passed in, calls the multiply method on operate.", function(){
-
-      //Arrange
-      var calc = new Calculator(1, 1, "divide");
-      var mock = sinon.mock(calc);
-      var expectation = mock.expects("divide");
-      expectation.exactly(1);
-  
-      //Invoke
-      calc.operate();
-
-      //Assert
-      mock.verify();
-    });
-
-    it("Value equals the division of two inputs", function(){
-
-      //Arrange
-      var calc = new Calculator(8, 2, "divide");
-      //Invoke
-      calc.operate();
-
-      //Assert
-      expect(calc.value).to.be.equal(4);
-
-    });
-
-    it("Returns Appropriate Action String", function(){
-
-      //Arrange
-      var calc = new Calculator(1, 1, "divide");
-      //Invoke
-      calc.operate();
-
-      //Assert
-      expect(calc.getAction()).to.be.equal("dividing");
-
-    });
-
-    it("Raises divide by zero flag", function(){
-
-      //Arrange
-      var calc = new Calculator(1, 0, "divide");
-      //Invoke
-      calc.operate();
-
-      //Assert
-      expect(calc.attemptedDivideByZero).to.be.true;
-
-    });
-  });
 });
